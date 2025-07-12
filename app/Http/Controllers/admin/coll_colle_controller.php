@@ -14,7 +14,7 @@ class coll_colle_controller extends Controller
     {
         $add1 = $cuss_count + 1;
         $final_cc_acc = null;
-        $final_cc_acc = 'SBGCC' . $add1;
+        $final_cc_acc = 'JBGCC' . $add1;
         return $final_cc_acc;
     }
 
@@ -25,12 +25,11 @@ class coll_colle_controller extends Controller
             if (count($cuss_last_id) == 0) {
                 $cuss_id = 0;
             } else {
-                if(count($cuss_last_id)<=4)
-                {
+                if (count($cuss_last_id) <= 4) {
                     foreach ($cuss_last_id as $count) {
                         $cuss_id = $count->id;
                     }
-                }else{
+                } else {
                     return back()->with('error', 'Can Not Create New Account, Limit Extended!.....');
                 }
             }
@@ -56,23 +55,31 @@ class coll_colle_controller extends Controller
             $coll_colle_data = DB::select('SELECT * FROM collection_collector WHERE `acc_no`=?', [$acount_no]);
             if (count($coll_colle_data) > 0) {
                 foreach ($coll_colle_data as $cust_data) {
-                    if(($cust_data ->is_account_ready_to_reuse )==1){
+                    if (($cust_data->is_account_ready_to_reuse) == 1) {
                         $profile = time() . '.' . $request->photo->getClientOriginalExtension();
                         $img = $request->photo->move(('profile'), $profile);
-                        DB::update('UPDATE `collection_collector` SET `full_name`=?,`mobile_no`=?,`email`=?,`address`=?,`profile`=?,`pin`=?,`pass`=?,`is_active`=?,`is_account_ready_to_reuse`=? WHERE acc_no = ?',
-                            [$full_name,$mobile,$email,$address,$profile,$pin,$mobile,1,0,$acount_no]);
+                        DB::update(
+                            'UPDATE `collection_collector` SET `full_name`=?,`mobile_no`=?,`email`=?,`address`=?,`profile`=?,`pin`=?,`pass`=?,`is_active`=?,`is_account_ready_to_reuse`=? WHERE acc_no = ?',
+                            [$full_name, $mobile, $email, $address, $profile, $pin, $mobile, 1, 0, $acount_no]
+                        );
 
                         return back()->with('message', 'Account Open Successfully.....');
-                    }else{
+                    } else {
                         return back()->with('error', 'Account Number Is In Use.....');
                     }
                 }
-            }else{
+            } else {
                 $profile = time() . '.' . $request->photo->getClientOriginalExtension();
                 $request->photo->move(('profile'), $profile);
                 $customer_data = array(
-                    'acc_no' => $acount_no, 'full_name' => $full_name,'mobile_no' => $mobile, 'email' => $email,
-                    'address' => $address, 'profile' => $profile,'pin' => $pin,'pass' => $mobile
+                    'acc_no' => $acount_no,
+                    'full_name' => $full_name,
+                    'mobile_no' => $mobile,
+                    'email' => $email,
+                    'address' => $address,
+                    'profile' => $profile,
+                    'pin' => $pin,
+                    'pass' => $mobile
                 );
                 DB::table('collection_collector')->insert($customer_data);
                 return back()->with('message', 'Account Open Successfully.....');

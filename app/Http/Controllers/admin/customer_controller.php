@@ -17,15 +17,15 @@ class customer_controller extends Controller
         $len = strlen($add1);
         $final_user_acc = null;
         if ($len == 1 ||  strlen($add1) == 1) {
-            $final_user_acc = 'SBG0000' . $add1;
+            $final_user_acc = 'JBG0000' . $add1;
         } else if ($len == 2 && strlen($add1) == 2) {
-            $final_user_acc = 'SBG000' . $add1;
+            $final_user_acc = 'JBG000' . $add1;
         } else if ($len == 3 && strlen($add1) == 3) {
-            $final_user_acc = 'SBG00' . $add1;
+            $final_user_acc = 'JBG00' . $add1;
         } else if ($len == 4 && strlen($add1) == 4) {
-            $final_user_acc = 'SBG0' . $add1;
+            $final_user_acc = 'JBG0' . $add1;
         } else if ($len == 5 && strlen($add1) == 5) {
-            $final_user_acc = 'SBG' . $add1;
+            $final_user_acc = 'JBG' . $add1;
         }
         return $final_user_acc;
     }

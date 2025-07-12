@@ -1,4 +1,4 @@
-    <title>SBG</title>
+    <title>JBG</title>
 
     <!-- Favicons -->
     <!-- <link href="{{asset('img/favicon.png')}}" rel="icon"> -->
