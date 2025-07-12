@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    @include('head.head')
+</head>
+
+<body>
+    <section id="container">
+
+        @include('admin.sidebar.sidebar')
+
+        <section class="container-fluid" id="main-content">
+            <section class="wrapper">
+                @if(Session::has('message'))
+                <div class="showback">
+                    <h3>Alert!</h3>
+                    <p class="alert alert-success">
+                        {{ Session::get('message') }}
+                        {{ Session::forget('message') }}
+                    </p>
+                </div>
+                @endif
+                @if(Session::has('error'))
+                <div class="showback">
+                    <h3>Alert!</h3>
+                    <p class="alert alert-danger">
+                        {{ Session::get('error') }}
+                        {{ Session::forget('error') }}
+                    </p>
+                </div>
+                @endif
+                <h3> Active Fixed Deposit</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content-panel">
+                            <section class="container-fluid">
+                                <div class="row mb">
+                                    <!-- page start-->
+                                    <div class="content-panel">
+                                        <div class="adv-table" style="overflow-x:auto;">
+                                            <table cellpadding="0" cellspacing="0" border="0"
+                                                class="display table table-bordered" id="hidden-table-info">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Mobile No</th>
+                                                        <th>FD Amount</th>
+                                                        <th>Date Of Deposit</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if(!empty($active_fixed_deposit))
+                                                    @foreach ($active_fixed_deposit as $data)
+                                                    <tr>
+                                                        <td>{{++$sr}}</td>
+                                                        <td>{{$data->customer_name}}</td>
+                                                        <td>{{$data->mobile_no}}</td>
+                                                        <td>{{$data->FD_amount}}</td>
+                                                        <td>{{$data->date_of_deposit}}</td>
+                                                        <td>
+                                                            <a href="{{url('/show_fd_details/'.$data->id)}}"
+                                                                class="btn btn-theme">
+                                                                Show
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- page end-->
+                                </div>
+                                <!-- /row -->
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <!-- /MAIN CONTENT -->
+        <!--main content end-->
+        <!--footer start-->
+        @include('footer.footer')
+        <!--footer end-->
+        <script src="{{asset('lib/common-scripts.js')}}"></script>
+        <script type="text/javascript" language="javascript"
+            src="{{asset('lib/advanced-datatable/js/jquery.dataTables.js')}}"></script>
+        <script type="text/javascript" src="{{asset('lib/advanced-datatable/js/DT_bootstrap.js')}}"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            var oTable = $('#hidden-table-info').dataTable({
+                "aoColumnDefs": [{
+                    // "bSortable": false,
+                    "aTargets": [0]
+                }],
+                "aaSorting": [
+                    [0, 'asc']
+                ]
+            });
+
+        });
+        </script>
+    </section>
+</body>
+
+
+
+</html>
